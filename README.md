@@ -18,9 +18,6 @@ It is a prototype app based on the following technologies and patterns:
 6. Jetpack Compose
 7. Swift UI
 
-## How to use
-Switch between the branches 1 to 7 to checkout from a more initial to a more advanced state of the application.
-
 ## Architectural diagram
 
 The UI/Framework layers reside in the native apps, while everything from the View Model up to Data layer is in the common KMP module.
