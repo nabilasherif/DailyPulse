@@ -32,8 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.petros.efthymiou.dailypulse.articles.Article
-import com.petros.efthymiou.dailypulse.articles.ArticlesViewModel
+import com.petros.efthymiou.dailypulse.articles.application.Article
+import com.petros.efthymiou.dailypulse.articles.presentation.ArticlesViewModel
 import androidx.compose.ui.layout.ContentScale
 import org.koin.androidx.compose.koinViewModel
 

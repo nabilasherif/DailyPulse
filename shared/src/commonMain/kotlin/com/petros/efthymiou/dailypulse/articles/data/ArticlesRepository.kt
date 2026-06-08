@@ -1,4 +1,6 @@
-package com.petros.efthymiou.dailypulse.articles
+package com.petros.efthymiou.dailypulse.articles.data
+
+import com.petros.efthymiou.dailypulse.articles.data.ArticlesService
 
 class ArticlesRepository(private val dataSource: ArticlesDataSource, private val service: ArticlesService) {
     suspend fun getArticles(forceFetch: Boolean): List<ArticlesRaw>{

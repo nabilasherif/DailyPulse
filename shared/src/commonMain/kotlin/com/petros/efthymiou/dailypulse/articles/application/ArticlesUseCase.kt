@@ -1,12 +1,14 @@
-package com.petros.efthymiou.dailypulse.articles
+package com.petros.efthymiou.dailypulse.articles.application
 
+import com.petros.efthymiou.dailypulse.articles.data.ArticlesRaw
+import com.petros.efthymiou.dailypulse.articles.data.ArticlesRepository
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
 import kotlin.math.abs
-import kotlinx.datetime.Instant
 
 class ArticlesUseCase(private val repo: ArticlesRepository) {
 
@@ -18,16 +20,17 @@ class ArticlesUseCase(private val repo: ArticlesRepository) {
     private fun mapArticles(articlesRaw: List<ArticlesRaw>): List<Article> =articlesRaw.map{ raw ->
         Article(
             raw.title,
-            raw.desc?: "Click to find out more",
+            raw.desc ?: "Click to find out more",
             getDaysAgoString(raw.date),
-            raw.imageUrl?:"https://image.cnbcfm.com/api/v1/image/107326078-1698758530118-gettyimages-1765623456-wall26362_igj6ehhp.jpeg?v=1698758587&w=1920&h=1080"
+            raw.imageUrl
+                ?: "https://image.cnbcfm.com/api/v1/image/107326078-1698758530118-gettyimages-1765623456-wall26362_igj6ehhp.jpeg?v=1698758587&w=1920&h=1080"
         )
     }
 
     private fun getDaysAgoString(date: String) : String{
-        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val today = Clock.System.todayIn(TimeZone.Companion.currentSystemDefault())
         val days = today.daysUntil(
-            Instant.parse(date).toLocalDateTime(TimeZone.currentSystemDefault()).date
+            Instant.Companion.parse(date).toLocalDateTime(TimeZone.Companion.currentSystemDefault()).date
         )
 
         val result = when {
