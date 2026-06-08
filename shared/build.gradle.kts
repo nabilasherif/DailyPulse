@@ -74,7 +74,7 @@ android {
 sqldelight {
     databases {
         create(name = "DailyPulseDatabase") {
-            packageName.set("petros.efthymiou.dailypulse.db")
+            packageName.set("com.petros.efthymiou.dailypulse")
         }
     }
 }

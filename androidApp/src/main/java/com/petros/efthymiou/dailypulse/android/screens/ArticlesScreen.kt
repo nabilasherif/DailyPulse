@@ -20,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -46,12 +47,17 @@ fun ArticlesScreen(
     Column {
         AppBar(onAboutButtonClick)
 
-        if (articlesState.value.loading)
-            Loader()
         if (articlesState.value.error != null)
             ErrorMessage(articlesState.value.error!!)
-        if (articlesState.value.articles.isNotEmpty())
-            ArticlesListView(articlesState.value.articles)
+
+        if (articlesState.value.loading && articlesState.value.articles.isEmpty())
+            Loader()
+        else
+            ArticlesListView(
+                articles = articlesState.value.articles,
+                isRefreshing = articlesState.value.loading,
+                onRefresh = { articlesViewModel.getArticles(forceFetch = true) }
+            )
     }
 }
 
@@ -73,12 +79,22 @@ private fun AppBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticlesListView(articles: List<Article>) {
-
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(articles) { article ->
-            ArticleItemView(article = article)
+fun ArticlesListView(
+    articles: List<Article>,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit
+) {
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(articles) { article ->
+                ArticleItemView(article = article)
+            }
         }
     }
 }

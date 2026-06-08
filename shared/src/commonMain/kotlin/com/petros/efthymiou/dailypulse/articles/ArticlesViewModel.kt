@@ -20,10 +20,11 @@ class ArticlesViewModel(
     init{
         getArticles()
     }
-    private fun getArticles(){
-        scope.launch {
 
-            val fetchedArticles = useCase.getArticles()
+    fun getArticles(forceFetch : Boolean = false){
+        scope.launch {
+            _articlesState.emit(ArticlesState(loading = true, articles = _articlesState.value.articles))
+            val fetchedArticles = useCase.getArticles(forceFetch)
 
             _articlesState.emit(ArticlesState(articles = fetchedArticles))
         }
